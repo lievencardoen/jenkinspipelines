@@ -2,6 +2,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'Greeting', defaultValue: 'Hello', description: 'How should I greet the world?')
+    }
+
     environment {
         TOPLEVELENV = 'toplevelenv'
 
@@ -16,7 +20,8 @@ pipeline {
                 script: 'exit 1'
             )}"""
 
-        TEST_CREDENTIALS=credentials('CredentialsTestIdd')
+        // CredentialsTestId must exist in Jenkins Credentials
+        TEST_CREDENTIALS=credentials('CredentialsTestId')
     }
 
     stages {
