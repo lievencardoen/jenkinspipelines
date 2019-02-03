@@ -4,6 +4,17 @@ pipeline {
 
     environment {
         TOPLEVELENV = 'toplevelenv'
+
+        // Using returnStdout
+        CC = """${sh(
+                returnStdout: true,
+                script: 'echo "clang"'
+            )}"""
+        // Using returnStatus
+        EXIT_STATUS = """${sh(
+                returnStatus: true,
+                script: 'exit 1'
+            )}"""
     }
 
     stages {
@@ -15,6 +26,7 @@ pipeline {
           }
         }
         stage('Build') {
+          // Scope of INITIALIZE_VAR will only be this stage
           environment {
                 INITIALIZE_VAR = 'initialize_var'
           }
