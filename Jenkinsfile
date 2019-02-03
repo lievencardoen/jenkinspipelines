@@ -5,16 +5,18 @@ pipeline {
     environment {
         TOPLEVELENV = 'toplevelenv'
 
-        // Using returnStdout
+        // Using returnStdout CC will be equal to clang
         CC = """${sh(
                 returnStdout: true,
                 script: 'echo "clang"'
             )}"""
-        // Using returnStatus
+        // Using returnStatus EXIT_STATUS will be equal to 1
         EXIT_STATUS = """${sh(
                 returnStatus: true,
                 script: 'exit 1'
             )}"""
+
+        TEST_CREDENTIALS=credentials('CredentialsTestId')
     }
 
     stages {
