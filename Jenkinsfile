@@ -16,7 +16,7 @@ pipeline {
                 script: 'exit 1'
             )}"""
 
-        TEST_CREDENTIALS=credentials('CredentialsTestId')
+        TEST_CREDENTIALS=credentials('CredentialsTestIdd')
     }
 
     stages {
