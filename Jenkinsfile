@@ -8,9 +8,6 @@ pipeline {
 
     stages {
         stage('Initialize') {
-          environment {
-                INITIALIZE_VAR = 'initialize_var'
-          }
           steps {
             sh 'printenv'
             echo "Running ${env.JOB_NAME} with id ${env.BUILD_ID} on ${env.JENKINS_URL}"
@@ -18,8 +15,12 @@ pipeline {
           }
         }
         stage('Build') {
+          environment {
+                INITIALIZE_VAR = 'initialize_var'
+          }
             steps {
                 echo 'Building..'
+                sh 'printenv'
             }
         }
         stage('Test') {
