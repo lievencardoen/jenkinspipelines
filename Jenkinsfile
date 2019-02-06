@@ -9,6 +9,7 @@ pipeline {
 
       booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
 
+      // The value on the first line will be the default.
       choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
 
       password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
@@ -37,6 +38,9 @@ pipeline {
     }
 
     stages {
+        stage('Checkout scm') {
+          checkout scm
+        }
         stage('Initialize') {
           steps {
             sh 'printenv'
@@ -63,6 +67,14 @@ pipeline {
             steps {
                 echo 'Deploying....'
             }
+        }
+    }
+    post {
+        always {
+            echo 'Always show this message'
+        }
+        failure {
+            echo 'Show this message in case of failure'
         }
     }
 }
