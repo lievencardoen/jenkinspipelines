@@ -64,6 +64,22 @@ pipeline {
                 throw
             }
         }
+        stage('foo credentials') {
+            steps {
+                // all credential values are available for use but will be masked in console log
+                sh 'echo "FOO is $FOO_CREDENTIALS"'
+                sh 'echo "FOO_USR is $FOO_CREDENTIALS"'
+                sh 'echo "FOO_PSW is $FOO_CREDENTIALS"'
+
+                //Write to file
+                dir("combined") {
+                    sh 'echo $FOO_CREDENTIALS > foo.txt'
+                }
+                sh 'echo $FOO_CREDENTIALS > foo_psw.txt'
+                sh 'echo $FOO_CREDENTIALS > foo_usr.txt'
+                archive "**/*.txt"
+            }
+        }
         stage('Checkout scm') {
           steps {
              checkout scm
