@@ -32,7 +32,9 @@ pipeline {
 
         FOO_CREDENTIALS = credentials('FOOcredentials')
 
-        FOO_CREDENTIALS_SYSTEM_SCOPED = credentials('FOOcredentialsSystemScope')
+        // This will crash the build if uncommented because it's a
+        // System scoped credential (and can't be used in jenkins jobs)
+        //FOO_CREDENTIALS_SYSTEM_SCOPED = credentials('FOOcredentialsSystemScope')
     }
 
     options {
@@ -78,22 +80,6 @@ pipeline {
                 }
                 sh 'echo $FOO_CREDENTIALS_USR > foo_psw.txt'
                 sh 'echo $FOO_CREDENTIALS_PSW > foo_usr.txt'
-                archive "**/*.txt"
-            }
-        }
-        stage('foo credentials system scpoed') {
-            steps {
-                // all credential values are available for use but will be masked in console log
-                sh 'echo "FOO is $FOO_CREDENTIALS_SYSTEM_SCOPED"'
-                sh 'echo "FOO_USR is $FOO_CREDENTIALS_SYSTEM_SCOPED_USR"'
-                sh 'echo "FOO_PSW is $FOO_CREDENTIALS_SYSTEM_SCOPED_PSW"'
-
-                //Write to file
-                dir("combined") {
-                    sh 'echo $FOO_CREDENTIALS_SYSTEM_SCOPED > foo.txt'
-                }
-                sh 'echo $FOO_CREDENTIALS_SYSTEM_SCOPED_USR > foo_psw.txt'
-                sh 'echo $FOO_CREDENTIALS_SYSTEM_SCOPED_PSW > foo_usr.txt'
                 archive "**/*.txt"
             }
         }
