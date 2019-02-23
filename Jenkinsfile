@@ -69,15 +69,31 @@ pipeline {
             steps {
                 // all credential values are available for use but will be masked in console log
                 sh 'echo "FOO is $FOO_CREDENTIALS"'
-                sh 'echo "FOO_USR is $FOO_CREDENTIALS"'
-                sh 'echo "FOO_PSW is $FOO_CREDENTIALS"'
+                sh 'echo "FOO_USR is $FOO_CREDENTIALS_USR"'
+                sh 'echo "FOO_PSW is $FOO_CREDENTIALS_PSW"'
 
                 //Write to file
                 dir("combined") {
                     sh 'echo $FOO_CREDENTIALS > foo.txt'
                 }
-                sh 'echo $FOO_CREDENTIALS > foo_psw.txt'
-                sh 'echo $FOO_CREDENTIALS > foo_usr.txt'
+                sh 'echo $FOO_CREDENTIALS_USR > foo_psw.txt'
+                sh 'echo $FOO_CREDENTIALS_PSW > foo_usr.txt'
+                archive "**/*.txt"
+            }
+        }
+        stage('foo credentials system scpoed') {
+            steps {
+                // all credential values are available for use but will be masked in console log
+                sh 'echo "FOO is $FOO_CREDENTIALS_SYSTEM_SCOPED"'
+                sh 'echo "FOO_USR is $FOO_CREDENTIALS_SYSTEM_SCOPED_USR"'
+                sh 'echo "FOO_PSW is $FOO_CREDENTIALS_SYSTEM_SCOPED_PSW"'
+
+                //Write to file
+                dir("combined") {
+                    sh 'echo $FOO_CREDENTIALS_SYSTEM_SCOPED > foo.txt'
+                }
+                sh 'echo $FOO_CREDENTIALS_SYSTEM_SCOPED_USR > foo_psw.txt'
+                sh 'echo $FOO_CREDENTIALS_SYSTEM_SCOPED_PSW > foo_usr.txt'
                 archive "**/*.txt"
             }
         }
