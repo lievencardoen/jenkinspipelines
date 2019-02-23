@@ -55,15 +55,16 @@ pipeline {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
         }
-        stage('Try Catch Example') {
-            try {
-                sh 'exit 1'
-            }
-            catch (exc) {
-                echo 'Something failed, I should sound the klaxons!'
-                //throw
-            }
-        }
+        // Only in scripted pipeline. Declarative --> use post
+        // stage('Try Catch Example') {
+        //     try {
+        //         sh 'exit 1'
+        //     }
+        //     catch (exc) {
+        //         echo 'Something failed, I should sound the klaxons!'
+        //         //throw
+        //     }
+        // }
         stage('foo credentials') {
             steps {
                 // all credential values are available for use but will be masked in console log
