@@ -42,7 +42,7 @@ pipeline {
     }
 
     stages {
-        stage('Example') {
+        stage('Input Example') {
             input {
                 message "Should we continue?"
                 ok "Yes, we should."
@@ -53,6 +53,15 @@ pipeline {
             }
             steps {
                 echo "Hello, ${PERSON}, nice to meet you."
+            }
+        }
+        stage('Try Catch Example') {
+            try {
+                sh 'exit 1'
+            }
+            catch (exc) {
+                echo 'Something failed, I should sound the klaxons!'
+                throw
             }
         }
         stage('Checkout scm') {
